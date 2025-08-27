@@ -1,0 +1,35 @@
+﻿# Ignore .env files
+.env 
+
+# Ignore user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vspscc
+*.vssscc
+
+# Ignore VSCode and Rider settings
+.vscode/
+.idea/
+
+# Ignore build results
+bin/
+obj/
+out/
+
+# Ignore logs
+*.log
+logs/
+
+# Ignore published artifacts
+publish/
+*.publish.xml
+
+# Ignore node_modules (if JS/TS frontend exists)
+node_modules/
+
+# Ignore test coverage reports
+coverage/
+TestResults/
+
