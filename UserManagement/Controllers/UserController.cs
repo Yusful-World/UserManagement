@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.ApplicationFeatures.Users.Commands;
 using UserManagement.ApplicationFeatures.Users.Dtos;
+using UserManagement.ApplicationFeatures.Users.Queries;
 
 namespace UserManagement.Controllers
 {
@@ -31,6 +32,45 @@ namespace UserManagement.Controllers
             }
 
             return CreatedAtAction(nameof(CreateUser), response);
+        }
+
+        [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<UserResponseDto>> GetUserById(Guid id)
+        {
+            var query = new GetUserByIdQuery(id);
+            var response = await _mediator.Send(query);
+            if (response.Data == null)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
+        [HttpDelete("delete_users")]
+        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<object>> DeleteRangeUser(IEnumerable<Guid> id)
+        {
+            var command = new DeleteUserCommand(id);
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
+        }
+
+        [HttpPatch("update-user{id}")]
+        [ProducesResponseType(typeof(UpdateProfileResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UpdateProfileResponseDto), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(UpdateProfileResponseDto), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(UpdateProfileResponseDto), StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<UpdateProfileResponseDto>> UpdateProfile(string id, [FromForm] UpdateProfileRequestDto requestDto)
+        {
+            var command = new UpdateUserCommand(id, requestDto);
+            var response = await _mediator.Send(command);
+
+            return Ok(response);
         }
     }
 }
