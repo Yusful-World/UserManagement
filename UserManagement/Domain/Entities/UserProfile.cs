@@ -3,7 +3,7 @@ using UserManagement.Domain.Enums;
 
 namespace UserManagement.Domain.Entities
 {
-    public class Profile : IEntityBase
+    public class UserProfile : IEntityBase
     {
         public Guid Id { get; set; }
         public Gender? Gender { get; set; }
@@ -11,7 +11,7 @@ namespace UserManagement.Domain.Entities
         public string? Address { get; set; }
         public string? StateOfOrigin { get; set; }
         public string? Nationality { get; set; }
-        public string? AvatarUrl { get; set; }
+        public string? ProfilePic { get; set; }
         public Guid UserId { get; set; }
         public User User { get; set; }
         public string? FacebookLink { get; set; }
