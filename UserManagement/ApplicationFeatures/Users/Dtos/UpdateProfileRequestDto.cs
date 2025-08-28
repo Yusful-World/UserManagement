@@ -4,7 +4,7 @@ using UserManagement.Domain.Enums;
 
 namespace UserManagement.ApplicationFeatures.Users.Dtos
 {
-    public class UpdateProfileDto
+    public class UpdateProfileRequestDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -14,14 +14,10 @@ namespace UserManagement.ApplicationFeatures.Users.Dtos
         public string? Address { get; set; }
         public string? StateOfOrigin { get; set; }
         public string? Nationality { get; set; }
-        public string? AvatarUrl { get; set; }
-        public Guid UserId { get; set; }
-        public User User { get; set; }
+        public IFormFile? ProfilePic { get; set; }
         public string? FacebookLink { get; set; }
         public string? TwitterLink { get; set; }
         public string? LinkedinLink { get; set; }
         public string? InstagramLink { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }

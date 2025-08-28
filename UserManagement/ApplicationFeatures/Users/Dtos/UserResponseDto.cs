@@ -13,6 +13,8 @@ namespace UserManagement.ApplicationFeatures.Users.Dtos
 
         [JsonPropertyName("last_name")]
         public string LastName { get; set; } = "";
+        [JsonPropertyName("username")]
+        public string UserName { get; set; }
 
         [JsonPropertyName("email")]
         public string Email { get; set; } = string.Empty;
@@ -25,12 +27,12 @@ namespace UserManagement.ApplicationFeatures.Users.Dtos
 
         [JsonPropertyName("account_type")]
         public string? AccountType { get; set; }
-        public DateOnly? DateOfBirth { get; set; }
-        public Gender? Gender { get; set; }
-        public string? Nationality { get; set; }
         [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }
+
+        [JsonPropertyName("refresh_token")]
+        public string RefreshToken { get; set; }
         [JsonPropertyName("profile")]
-        public UpdateProfileDto? Profile { get; set; }
+        public UpdateProfileResponseDto? Profile { get; set; }
     }
 }

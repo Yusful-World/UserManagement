@@ -78,7 +78,7 @@ namespace UserManagement.Data
                     FirstName = "Yusuf",
                     LastName = "Abdullahi",
                     PhoneNumber = "08053565771",
-                    RolePermission = RolePermission.Admin,
+                    Role = RolePermission.Admin,
                     IsSuperAdmin = true,
                 };
                 var result = await _userManager.CreateAsync(adminUser, adminEmail);

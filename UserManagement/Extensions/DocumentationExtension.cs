@@ -10,7 +10,7 @@ namespace UserManagement.Extensions
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Gaze-Auth-Service",
+                    Title = "User Management",
                     Version = "v1"
                 });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

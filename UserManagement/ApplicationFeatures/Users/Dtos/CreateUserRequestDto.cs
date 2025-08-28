@@ -31,5 +31,6 @@ namespace UserManagement.ApplicationFeatures.Users.Dtos
         public Gender? Gender { get; set; }
         public string? Nationality { get; set; }
         public IFormFile? ProfilePic { get; set; }
+        public RolePermission Role { get; set; }
     }
 }

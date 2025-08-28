@@ -29,16 +29,12 @@
 	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
 	  <PackageReference Include="shortid" Version="4.0.0" />
 	  <PackageReference Include="ShortIdFactory" Version="1.0.1" />
-	  <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationFeatures\Users\Commands\" />
-    <Folder Include="ApplicationFeatures\Users\CommandHandlers\" />
     <Folder Include="ApplicationFeatures\Users\QueryHandlers\" />
     <Folder Include="ApplicationFeatures\Users\Queries\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Infrastructure\SharedDtos\" />
   </ItemGroup>
 
 </Project>

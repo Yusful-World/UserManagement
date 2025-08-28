@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using UserManagement.Data.Interfaces;
 using UserManagement.Data;
 using UserManagement.Domain.Entities;
+using UserManagement.Infrastructure.Repository.Interfaces;
+using UserManagement.Infrastructure.Repository;
+using UserManagement.Infrastructure.Services.Interfaces;
+using UserManagement.Infrastructure.Services;
 
 namespace UserManagement.Extensions
 {
@@ -12,7 +16,7 @@ namespace UserManagement.Extensions
         {
             services.AddConnectionString(configuration);
             services.AddScoped<IDbInitializer, DbInitializer>();
-            //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddIdentity<User, Role>(options =>
             {
@@ -28,14 +32,14 @@ namespace UserManagement.Extensions
             //services.AddScoped<IMessageQueueService, MessageQueueService>();
             //services.AddSingleton(configuration.GetSection("SMTP_CREDENTIALS").Get<SmtpCredentials>());
 
-            //services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ITokenService, TokenService>();
             //services.AddHostedService<TokenCleanUpService>();
 
             //services.AddSingleton<IBackgroundTaskService, BackgroundTaskService>();
             //services.AddHostedService<EmailBackgroundService>();
 
-            //services.AddScoped<ICloudinaryService, CloudinaryService>();
-            //services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
+            services.AddScoped<IImageService, ImageService>();
 
 
 

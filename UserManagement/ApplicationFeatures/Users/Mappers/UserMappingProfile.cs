@@ -19,6 +19,9 @@ namespace UserManagement.ApplicationFeatures.Users.Mappers
                    .ForMember(d => d.AccountType, opt => opt.Ignore())
                    .ForMember(d => d.AccessToken, opt => opt.Ignore())
                    .ReverseMap();
+
+            CreateMap<UserProfile, UpdateProfileResponseDto>()
+            .ReverseMap();
         }
     }
 }
