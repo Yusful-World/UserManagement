@@ -40,7 +40,6 @@
     <Folder Include="ApplicationFeatures\Users\Queries\" />
     <Folder Include="Controllers\" />
     <Folder Include="Infrastructure\SharedDtos\" />
-    <Folder Include="Infrastructure\Services\Interfaces\" />
   </ItemGroup>
 
 </Project>
