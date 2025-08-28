@@ -3,7 +3,7 @@ using UserManagement.Domain.Enums;
 
 namespace UserManagement.Domain.Entities
 {
-    public class Profile : IEntityBase
+    public class UserProfile : IEntityBase
     {
         public Guid Id { get; set; }
         public Gender? Gender { get; set; }
