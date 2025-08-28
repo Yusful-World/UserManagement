@@ -30,7 +30,7 @@ namespace UserManagement.Extensions
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-
+            services.AddSwaggerDoc();
             //services.AddApiVersioning();
             services.AddAutoMapper(cfg =>
             {

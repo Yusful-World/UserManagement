@@ -35,7 +35,6 @@
   <ItemGroup>
     <Folder Include="ApplicationFeatures\Users\Commands\" />
     <Folder Include="ApplicationFeatures\Users\CommandHandlers\" />
-    <Folder Include="ApplicationFeatures\Users\Dtos\" />
     <Folder Include="ApplicationFeatures\Users\QueryHandlers\" />
     <Folder Include="ApplicationFeatures\Users\Queries\" />
     <Folder Include="Controllers\" />
