@@ -6,6 +6,7 @@ using UserManagement.ApplicationFeatures.Users.Commands;
 using UserManagement.ApplicationFeatures.Users.Dtos;
 using UserManagement.Domain.Entities;
 using UserManagement.Domain.Enums;
+using UserManagement.Infrastructure.Repository.Interfaces;
 using UserManagement.Infrastructure.Services;
 using UserManagement.Infrastructure.Services.Interfaces;
 using UserManagement.Infrastructure.SharedDtos;
@@ -18,19 +19,19 @@ namespace UserManagement.ApplicationFeatures.Users.CommandHandlers
         private readonly ILogger<CreateUserCommandHandler> _logger;
         private readonly ITokenService _tokenService;
         private readonly UserManager<User> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IImageService _imageService;
+        private readonly IRepository<UserProfile> _profileRepo;
 
         public CreateUserCommandHandler(IMapper mapper, ILogger<CreateUserCommandHandler> logger,
-            ITokenService tokenService, UserManager<User> userManager, 
-            IHttpContextAccessor httpContextAccessor, IImageService imageService)
+            ITokenService tokenService, UserManager<User> userManager,
+            IImageService imageService, IRepository<UserProfile> profileRepo)
         {
             _mapper = mapper;
             _logger = logger;
             _tokenService = tokenService;
             _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
             _imageService = imageService;
+            _profileRepo = profileRepo;
         }
 
 
@@ -38,6 +39,7 @@ namespace UserManagement.ApplicationFeatures.Users.CommandHandlers
         {
             try
             {
+                // Check for existing user
                 var existingEmail = await _userManager.FindByEmailAsync(request.CreateUser.Email);
                 if (existingEmail is not null)
                 {
@@ -49,15 +51,14 @@ namespace UserManagement.ApplicationFeatures.Users.CommandHandlers
                     };
                 }
 
-                var newUser = _mapper.Map<User>(request.CreateUser);
-
-                if (newUser.Profile == null)
-                    newUser.Profile = new UserProfile();
+                //map to entity
+                var newUser = _mapper.Map<User>(request.CreateUser);               
                 newUser.UserName = request.CreateUser.Email;
-                newUser.Profile.ProfilePic = await UploadImage(request);
                 newUser.RefreshToken = _tokenService.GenerateRefreshToken();
+                newUser.IsActive = true;
                 newUser.CreatedAt = DateTime.UtcNow;
 
+                //create user
                 var createdUser = await _userManager.CreateAsync(newUser, request.CreateUser.Password);
                 if (!createdUser.Succeeded)
                 {
@@ -68,30 +69,22 @@ namespace UserManagement.ApplicationFeatures.Users.CommandHandlers
                     };
                 }
 
-                if (newUser.Role == RolePermission.Admin)
+                //assign role
+                var roleName = newUser.Role == RolePermission.Admin ? RoleName.Admin : RoleName.User;
+                var roleResult = await _userManager.AddToRoleAsync(newUser, roleName);
+                if (!roleResult.Succeeded)
                 {
-                    var createdUserRole = await _userManager.AddToRoleAsync(newUser, RoleName.Admin);
-                    if (!createdUserRole.Succeeded)
+                    return new FailureResponseDto<UserResponseDto>
                     {
-                        return new FailureResponseDto<UserResponseDto>
-                        {
-                            Message = "Role assignment failed",
-                            StatusCode = StatusCodes.Status500InternalServerError
-                        };
-                    }
+                        Message = "Role assignment failed",
+                        StatusCode = StatusCodes.Status500InternalServerError
+                    };
                 }
-                else
-                {
-                    var createdUserRole = await _userManager.AddToRoleAsync(newUser, RoleName.User);
-                    if (!createdUserRole.Succeeded)
-                    {
-                        return new FailureResponseDto<UserResponseDto>
-                        {
-                            Message = "Role assignment failed",
-                            StatusCode = StatusCodes.Status500InternalServerError
-                        };
-                    }
-                }
+
+                //build profile
+                newUser.Profile ??= await BuildProfile(request, newUser.Id);
+                await _profileRepo.AddAsync(newUser.Profile);
+                await _profileRepo.SaveChangesAsync(cancellationToken);
 
 
                 var accessToken = _tokenService.GenerateToken(newUser, 20);
@@ -119,6 +112,19 @@ namespace UserManagement.ApplicationFeatures.Users.CommandHandlers
                 };
             }
 
+        }
+
+        private async Task<UserProfile> BuildProfile(CreateUserCommand request, Guid userId)
+        {
+            return new UserProfile()
+            {
+                ProfilePic = request?.CreateUser.ProfilePic is not null ? await UploadImage(request) : null,
+                DateOfBirth = request?.CreateUser?.DateOfBirth ?? default,
+                Nationality = request?.CreateUser?.Nationality ?? string.Empty,
+                Gender = Enum.GetName(typeof(Gender), request?.CreateUser?.Gender),
+                UserId = userId,
+                CreatedAt = DateTime.UtcNow
+            };
         }
 
         public async Task<string?> UploadImage(CreateUserCommand request)
