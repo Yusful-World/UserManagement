@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="AspNetCore.Healthchecks.NpgSql" Version="9.0.0" />
 	  <PackageReference Include="AutoMapper" Version="15.0.1" />
 	  <PackageReference Include="CloudinaryDotNet" Version="1.27.6" />
 	  <PackageReference Include="dotenv.net" Version="4.0.0" />
@@ -25,6 +26,7 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
+	  <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.8" />
 	  <PackageReference Include="MimeKit" Version="4.13.0" />
 	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
 	  <PackageReference Include="shortid" Version="4.0.0" />
