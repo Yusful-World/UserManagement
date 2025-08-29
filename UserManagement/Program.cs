@@ -30,6 +30,13 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDoc();
 
+builder.Services.AddHealthChecks()
+.AddNpgSql(
+    builder.Configuration.GetConnectionString("DefaultConnection"),
+    name: "PostgreSQL",
+    tags: new[] { "db", "sql" }
+);
+
 var app = builder.Build();
 
 await SeedDatabase();
