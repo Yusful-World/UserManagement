@@ -3,7 +3,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using UserManagement.Data.Interfaces;
 using UserManagement.Extensions;
-using HealthChecks.NpgSql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,14 +30,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDoc();
 
-builder.Services.AddHealthChecks()
-    .AddNpgSql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        name: "PostgreSQL",
-        tags: new[] { "db", "sql" }
-    );
-
-
 var app = builder.Build();
 
 await SeedDatabase();
@@ -60,7 +51,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHealthChecks("/health");
+//app.MapHealthChecks("/health");
 
 app.Run();
 

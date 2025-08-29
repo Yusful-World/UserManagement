@@ -10,11 +10,18 @@ namespace UserManagement.Extensions
         public static IServiceCollection AddConnectionString(this IServiceCollection services, IConfiguration configuration)
         {
             var dbSettings = configuration.GetSection("DbCredentials").Get<DbCredentials>()
-            ?? throw new InvalidOperationException("DbSettings section is missing.");
+            ?? throw new InvalidOperationException("DbCredentials section is missing.");
 
             var connectionString = BuildConnectionString(dbSettings);
 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+
+            //services.AddHealthChecks()
+            //.AddNpgSql(
+            //    connectionString,
+            //    name: "PostgreSQL",
+            //    tags: new[] { "db", "sql" }
+            //);
 
             return services;
         }
