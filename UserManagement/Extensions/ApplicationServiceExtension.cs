@@ -61,12 +61,7 @@ namespace UserManagement.Extensions
                 };
             });
 
-            //services.AddSingleton(configuration.GetSection("EmailTemplateDirectory").Get<TemplateDir>());
-            //services.AddOptions<FrontendUrl>()
-            //    .Bind(configuration.GetSection("FrontendUrl"))
-            //    .ValidateDataAnnotations()
-            //    .ValidateOnStart();
-
+            
             services.AddAuthorization();
 
             return services;
