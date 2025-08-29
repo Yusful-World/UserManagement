@@ -56,11 +56,24 @@ Create an `.env` file in the root folder based on `.env.example`.
 ### Example `.env.example`
 
 ```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=usermanagement
-DB_USER=postgres
-DB_PASSWORD=yourpassword
+DbCredentials__Server=localhost
+DbCredentials__Database=
+DbCredentials__Port=5432
+DbCredentials__Username=
+DbCredentials__Password=
+
+ConnectionStrings__DefaultConnection="Host=localhost;Port=5432;Database=;Username=;Password=;"
+
+# === CLOUDINARY SETTINGS ===
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+# === JWT / AUTH SETTINGS ===
+JWT__SECRETKEY=
+JWT__ISSUER=GazeOnTradeAuth
+JWT__AUDIENCE=
+JWT__EXPIREINMINUTES=60
 ```
 
 ---
