@@ -1,1 +1,105 @@
-{"updates":\[{"pattern":".\*","multiple"\:false,"replacement":"# UserManagement\n\n## 📌 Description\n**UserManagement** is a demo project that performs basic CRUD operations on users. It is built with **.NET 8** and uses **PostgreSQL** as the database. The project is designed to demonstrate clean architecture practices while keeping validations minimal to allow for easy testing.\n\n---\n\n## ✨ Features\n- **Get User by Id** → requires a `Guid` identifier.\n- **Get All Users** → retrieves all users.\n- **Create User** → creates a new user with an associated profile.\n- **Update User** → updates an existing user and profile.\n\n⚡ Validations have been kept minimal since this is intended as a demo project.\n\n---\n\n## 📂 Project Structure\n`\nUserManagement\n│   Program.cs\n│   appsettings.json\n│\n├───ApplicationFeatures\n│   └───Users\n│       ├───Commands\n│       ├───Dtos\n│       ├───Handlers\n│       ├───Mappers\n│       └───Extensions\n│\n├───Data\n│\n├───Domain\n│\n├───Infrastructure\n│   ├───Services\n│   ├───Utils\n│   ├───Repository\n│   └───SharedDtos\n`\n\n---\n\n## 🗄️ Database\n- **PostgreSQL** is used as the database.\n- Database seeding and migrations are already configured (`DbInitializer` with auto migration).\n\n### Example Seed Data\nThe project comes with demo users pre-seeded. Example structure:\n\n`csharp\nnew User\n{\n    Id = Guid.NewGuid(),\n    Email = \"johndoe@example.com\",\n    UserName = \"johndoe\",\n    Profile = new UserProfile\n    {\n        FirstName = \"John\",\n        LastName = \"Doe\",\n        Gender = \"Male\",\n        DateOfBirth = new DateTime(1990, 5, 12),\n        Nationality = \"Nigerian\",\n        StateOfOrigin = \"Lagos\",\n        Address = \"123 Demo Street\",\n        FacebookLink = \"https://facebook.com/johndoe\",\n        TwitterLink = \"https://twitter.com/johndoe\",\n        LinkedinLink = \"https://linkedin.com/in/johndoe\",\n        InstagramLink = \"https://instagram.com/johndoe\",\n        CreatedAt = DateTime.UtcNow\n    }\n},\nnew User\n{\n    Id = Guid.NewGuid(),\n    Email = \"janedoe@example.com\",\n    UserName = \"janedoe\",\n    Profile = new UserProfile\n    {\n        FirstName = \"Jane\",\n        LastName = \"Doe\",\n        Gender = \"Female\",\n        DateOfBirth = new DateTime(1995, 8, 20),\n        Nationality = \"Ghanaian\",\n        StateOfOrigin = \"Accra\",\n        Address = \"456 Example Avenue\",\n        FacebookLink = \"https://facebook.com/janedoe\",\n        TwitterLink = \"https://twitter.com/janedoe\",\n        LinkedinLink = \"https://linkedin.com/in/janedoe\",\n        InstagramLink = \"https://instagram.com/janedoe\",\n        CreatedAt = DateTime.UtcNow\n    }\n}\n`\n\nThese records will be inserted automatically when you run the project.\n\n---\n\n## ⚙️ Setup Instructions\n\n### 1️⃣ Clone the repository\n`bash\ngit clone https://github.com/yourusername/UserManagement.git\ncd UserManagement\n`\n\n### 2️⃣ Configure Environment Variables\nCopy the example environment file:\n`bash\ncp .env.example .env\n`\n\nUpdate it with your PostgreSQL credentials and JWT keys.\n\n\*\*.env.example:\*\*\n`env\nDB_HOST=localhost\nDB_PORT=5432\nDB_NAME=usermanagement\nDB_USER=postgres\nDB_PASSWORD=yourpassword\nJWT_SECRET=your_jwt_secret_key\nJWT_ISSUER=your_issuer\nJWT_AUDIENCE=your_audience\n`\n\n### 3️⃣ Run Migrations (auto migration already configured)\nOn startup, migrations will run automatically.\n\n### 4️⃣ Run the Application\n`bash\ndotnet run --project UserManagement\n`\n\nThe API will be available at:\n`\nhttps://localhost:5001\nhttp://localhost:5000\n`\n\n---\n\n## 🚀 Usage\n\n### Get User by Id\n`http\nGET /api/users/{id}\n`\n\n### Get All Users\n`http\nGET /api/users\n`\n\n### Create User\n`http\nPOST /api/users\n`\n\n### Update User\n`http\nPUT /api/users/{id}\n`\n\n---\n\n## 
+# UserManagement
+
+## Project Description
+
+UserManagement is a demo project built with **.NET** and **PostgreSQL**. It performs **CRUD operations** on users with a simple structure that demonstrates clean architecture concepts. Minimal validations are included to make testing easier.
+
+---
+
+## Features
+
+* **Get User by Id** (requires a GUID)
+* **Get All Users**
+* **Create User**
+* **Update User**
+* **Minimal Validations** for easier testing
+
+---
+
+## Project Structure
+
+```
+UserManagement
+│
+├── ApplicationFeatures
+│   └── Users
+│       ├── Commands
+│       ├── DTOs
+│       ├── Handlers
+│       ├── Mappers
+│
+├── Extensions
+├── Data
+├── Domain
+├── Infrastructure
+│   ├── Services
+│   ├── Utils
+│   ├── Repository
+│   └── SharedDTOs
+```
+
+---
+
+## Technologies Used
+
+* **.NET 8**
+* **Entity Framework Core**
+* **PostgreSQL**
+* **CQRS Pattern**
+
+---
+
+## Environment Setup
+
+Create an `.env` file in the root folder based on `.env.example`.
+
+### Example `.env.example`
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=usermanagement
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+```
+
+---
+
+## Cloning and Running the Project
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/your-username/usermanagement.git
+cd usermanagement
+```
+
+2. **Set up environment variables**
+
+   * Copy `.env.example` → `.env`
+   * Update values according to your PostgreSQL setup.
+
+3. **Run database migrations**
+
+```bash
+dotnet ef database update
+```
+
+4. **Build and run the project**
+
+```bash
+dotnet build
+dotnet run
+```
+## Testing Endpoints
+
+You can test endpoints using **Swagger** (if enabled) or tools like **Postman**
+
+Example request:
+
+```bash
+GET https://localhost:5001/api/users/{id}
+```
+
+---
+
