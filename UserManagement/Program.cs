@@ -30,9 +30,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDoc();
 
+var connectionString = builder.Configuration["DefaultConnection"];
 builder.Services.AddHealthChecks()
 .AddNpgSql(
-    builder.Configuration.GetConnectionString("DefaultConnection"),
+    connectionString,
     name: "PostgreSQL",
     tags: new[] { "db", "sql" }
 );

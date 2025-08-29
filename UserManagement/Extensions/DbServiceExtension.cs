@@ -9,7 +9,7 @@ namespace UserManagement.Extensions
     {
         public static IServiceCollection AddConnectionString(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionString = configuration["DefaultConnection"];
             
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
