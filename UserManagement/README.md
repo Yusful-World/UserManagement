@@ -8,7 +8,7 @@ UserManagement is a demo project built with **.NET** and **PostgreSQL**. It perf
 
 ## Features
 
-* **Get User by Id** (requires a GUID)
+* **Get User by Id** (requires a GUID) ()
 * **Get All Users**
 * **Create User**
 * **Update User**
@@ -70,7 +70,7 @@ DB_PASSWORD=yourpassword
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/usermanagement.git
+git clone https://github.com/Yusful-World/UserManagement.git
 cd usermanagement
 ```
 
@@ -107,8 +107,8 @@ public static async Task SeedUsers(UserDbContext context)
     {
         var users = new List<User>
         {
-            new User { Id = Guid.NewGuid(), Email = "demo1@test.com", Role = "User" },
-            new User { Id = Guid.NewGuid(), Email = "demo2@test.com", Role = "Admin" }
+            new User { Id = Guid.NewGuid(), Email = "demo1@test.com", FirstName = "John" LastName = "Doe" Role = "User" },
+            new User { Id = Guid.NewGuid(), Email = "demo2@test.com", FirstName = "John" LastName = "Bull" Role = "Admin" }
         };
 
         await context.Users.AddRangeAsync(users);
