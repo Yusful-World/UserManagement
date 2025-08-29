@@ -1,13 +1,13 @@
-﻿# Use .NET SDK to build
+# Use .NET SDK to build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src/UserManagement
+WORKDIR /src
 
 # Copy only the csproj file and restore dependencies
 COPY UserManagement.csproj ./
-RUN dotnet restore
+RUN dotnet restore "UserManagement.csproj"
 
 # Copy everything else and build
-COPY . ./
+COPY . .
 RUN dotnet publish -c Release -o /app
 
 # Runtime image
