@@ -34,6 +34,15 @@ namespace UserManagement.Controllers
             return CreatedAtAction(nameof(CreateUser), response);
         }
 
+        [HttpGet("all")]
+        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
+        {
+            var users = await _mediator.Send(new GetAllUsers());
+            return Ok(users);
+        }
+
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UserResponseDto), StatusCodes.Status400BadRequest)]
@@ -60,12 +69,12 @@ namespace UserManagement.Controllers
             return Ok(response);
         }
 
-        [HttpPatch("update-user{id}")]
+        [HttpPatch("update-user{id:guid}")]
         [ProducesResponseType(typeof(UpdateProfileResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(UpdateProfileResponseDto), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(UpdateProfileResponseDto), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(UpdateProfileResponseDto), StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<UpdateProfileResponseDto>> UpdateProfile(string id, [FromForm] UpdateProfileRequestDto requestDto)
+        public async Task<ActionResult<UpdateProfileResponseDto>> UpdateProfile(Guid id, [FromForm] UpdateProfileRequestDto requestDto)
         {
             var command = new UpdateUserCommand(id, requestDto);
             var response = await _mediator.Send(command);

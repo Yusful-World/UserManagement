@@ -1,5 +1,6 @@
 using DotNetEnv;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using UserManagement.Data.Interfaces;
 using UserManagement.Extensions;
 
@@ -23,6 +24,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
 builder.Services.AddEndpointsApiExplorer();

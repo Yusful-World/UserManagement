@@ -6,9 +6,9 @@ namespace UserManagement.ApplicationFeatures.Users.Commands
 {
     public class UpdateUserCommand : IRequest<BaseResponseDto<UpdateProfileResponseDto>>
     {
-        public String Id { get; set; }
+        public Guid Id { get; set; }
         public UpdateProfileRequestDto UpdateRequest { get; set; }
-        public UpdateUserCommand(string id, UpdateProfileRequestDto updateRequest)
+        public UpdateUserCommand(Guid id, UpdateProfileRequestDto updateRequest)
         { 
             UpdateRequest = updateRequest;
             Id = id;
