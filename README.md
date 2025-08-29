@@ -62,7 +62,7 @@ DbCredentials__Port=5432
 DbCredentials__Username=
 DbCredentials__Password=
 
-ConnectionStrings__DefaultConnection="Host=localhost;Port=5432;Database=;Username=;Password=;"
+DefaultConnection="Host=localhost;Port=5432;Database=;Username=;Password=;"
 
 # === CLOUDINARY SETTINGS ===
 CLOUDINARY_CLOUD_NAME=
@@ -83,9 +83,8 @@ JWT__EXPIREINMINUTES=60
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/usermanagement.git
-cd usermanagement
-```
+git clone https://github.com/Yusful-World/UserManagement.git
+cd usermanagement```
 
 2. **Set up environment variables**
 
