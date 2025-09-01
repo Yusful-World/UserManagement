@@ -30,10 +30,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDoc();
 
-//var connectionString = builder.Configuration["DefaultConnection"];
+var connectionString = builder.Configuration["DefaultConnection"];
 builder.Services.AddHealthChecks()
 .AddNpgSql(
-    "postgresql://lafargeusermanagement_user:uneAFJMyRATLJlblZ3j6g4Ibojmrb1pE@dpg-d2os2kh5pdvs73cusn6g-a/lafargeusermanagement",
+    connectionString,
     name: "PostgreSQL",
     tags: new[] { "db", "sql" }
 );
