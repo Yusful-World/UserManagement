@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using UserManagement.ApplicationFeatures.Users.Commands;
 using UserManagement.ApplicationFeatures.Users.Dtos;
 using UserManagement.ApplicationFeatures.Users.Queries;
+using UserManagement.Infrastructure.Repository.Interfaces;
 
 namespace UserManagement.Controllers
 {
@@ -15,6 +16,24 @@ namespace UserManagement.Controllers
         public UserController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(
+            [FromQuery] string keyword,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+                return BadRequest("Search keyword cannot be empty.");
+
+            var request = new SearchUserQuery(keyword, pageSize, page);
+            var results = await _mediator.Send(request);
+
+            if (results == null || !results.Any())
+                return NotFound("No users found matching your search.");
+
+            return Ok(results);
         }
 
         [HttpPost("create-user")]

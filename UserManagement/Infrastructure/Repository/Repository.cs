@@ -110,5 +110,17 @@ namespace UserManagement.Infrastructure.Repository
         {
             await _context.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task<List<User>> SearchUsersAsync(string keyword, int page, int pageSize)
+        {
+            return await _context.Users
+                .Where(u => EF.Functions.ILike(u.FirstName, $"%{keyword}%") ||
+                    EF.Functions.ILike(u.LastName, $"%{keyword}%") ||
+                    EF.Functions.ILike(u.Email, $"%{keyword}%"))
+                .OrderBy(u => u.FirstName)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using UserManagement.ApplicationFeatures.Users.Commands;
 using UserManagement.Domain.Entities;

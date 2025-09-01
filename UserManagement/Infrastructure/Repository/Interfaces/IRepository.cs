@@ -21,5 +21,6 @@ namespace UserManagement.Infrastructure.Repository.Interfaces
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<T, bool>> predicate);
         Task SaveChangesAsync(CancellationToken cancellationToken);
+        Task<List<User>> SearchUsersAsync(string keyword, int page, int pageSize);
     }
 }
