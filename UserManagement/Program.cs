@@ -7,7 +7,7 @@ using UserManagement.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-Env.Load();
+//Env.Load();
 
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -31,6 +31,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDoc();
 
 var connectionString = builder.Configuration["DefaultConnection"];
+if (string.IsNullOrEmpty(connectionString))
+{
+    Console.WriteLine("FATAL ERROR: The 'DefaultConnection' string is null or empty.");
+    
+    return;
+}
 builder.Services.AddHealthChecks()
 .AddNpgSql(
     connectionString,
