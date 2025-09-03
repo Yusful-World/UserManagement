@@ -8,7 +8,7 @@ using UserManagement.Infrastructure.Repository.Interfaces;
 namespace UserManagement.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]")] //http://localhost:5285/api/v1/User/
     public class UserController : Controller
     {
         private readonly IMediator _mediator;

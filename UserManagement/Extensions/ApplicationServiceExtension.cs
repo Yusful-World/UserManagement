@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using UserManagement.ApplicationFeatures.Users.Mappers;
+using UserManagement.Data;
+using UserManagement.Domain.Entities;
 using UserManagement.Infrastructure.Utils;
 
 namespace UserManagement.Extensions
@@ -36,6 +39,15 @@ namespace UserManagement.Extensions
                 cfg.AddProfile(new UserMappingProfile());
             }, Assembly.GetExecutingAssembly());
             services.Configure<Jwt>(configuration.GetSection("JWT"));
+
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredLength = 8;
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
             var jwtSettings = configuration.GetSection("JWT").Get<Jwt>();
             services.AddAuthentication(options =>

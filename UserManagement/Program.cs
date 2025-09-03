@@ -15,6 +15,7 @@ builder.Configuration
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
+builder.Services.AddConnectionString(builder.Configuration);
 builder.Services.AddInfrastructureConfig(builder.Configuration);
 builder.Services.AddApplicationConfig(builder.Configuration);
 
@@ -30,14 +31,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDoc();
 
-var connectionString = builder.Configuration["DefaultConnection"];
-builder.Services.AddHealthChecks()
-.AddNpgSql(
-    connectionString,
-    name: "PostgreSQL",
-    tags: new[] { "db", "sql" }
-);
-
 var app = builder.Build();
 
 await SeedDatabase();
@@ -52,7 +45,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowAll");
 app.UseAuthentication();
