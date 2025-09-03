@@ -14,21 +14,10 @@ namespace UserManagement.Extensions
     {
         public static IServiceCollection AddInfrastructureConfig(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddConnectionString(configuration);
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-            services.AddIdentity<User, Role>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequiredLength = 8;
-            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-
             services.AddScoped<ITokenService, TokenService>();
-
 
             services.AddScoped<ICloudinaryService, CloudinaryService>();
             services.AddScoped<IImageService, ImageService>();

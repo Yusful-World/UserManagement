@@ -47,8 +47,9 @@ namespace UserManagement.ApplicationFeatures.Users.CommandHandlers
 
             return new SuccessResponseDto<object>
             {
-                Message = "All users deleted successfully.",
-                StatusCode = StatusCodes.Status200OK
+                Message = "successful",
+                StatusCode = StatusCodes.Status200OK,
+                Data = "All users deleted successfully."
             };
         }
     }

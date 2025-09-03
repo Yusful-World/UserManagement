@@ -15,6 +15,7 @@ builder.Configuration
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
+builder.Services.AddConnectionString(builder.Configuration);
 builder.Services.AddInfrastructureConfig(builder.Configuration);
 builder.Services.AddApplicationConfig(builder.Configuration);
 
@@ -31,12 +32,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDoc();
 
 var connectionString = builder.Configuration["DefaultConnection"];
-if (string.IsNullOrEmpty(connectionString))
-{
-    Console.WriteLine("FATAL ERROR: The 'DefaultConnection' string is null or empty.");
-    
-    return;
-}
 builder.Services.AddHealthChecks()
 .AddNpgSql(
     connectionString,
@@ -58,7 +53,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowAll");
 app.UseAuthentication();

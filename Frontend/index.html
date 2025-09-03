@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>User Management System</h1>
+            <p>Manage users with ease and style</p>
+        </div>
+
+        <div class="content">
+            <div class="top-controls">
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Search users by name, email, or phone..."
+                        id="searchInput"
+                    >
+                    <span class="search-icon"></span>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <button class="btn btn-secondary" id="bulkDeleteBtn" onclick="toggleBulkDelete()">
+                         Delete Users 
+                    </button>
+                    <button class="btn btn-primary" onclick="openCreateModal()">
+                         Create New User
+                    </button>
+                </div>
+            </div>
+
+            <div class="bulk-mode-header" id="bulkModeHeader">
+                <div class="selected-count" id="selectedCount">0 users selected</div>
+                <button class="cancel-bulk" onclick="cancelBulkDelete()">Cancel Selection</button>
+            </div>
+
+            <div class="table-container" id="tableContainer">
+                <div class="loading" id="loadingIndicator">
+                    <div class="spinner"></div>
+                </div>
+                <table id="usersTable" style="display: none;">
+                    <thead>
+                        <tr id="tableHeader">
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Create/Edit User Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Create New User</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+
+            <form id="userForm">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="picture">Profile Picture</label>
+                        <div class="image-upload" onclick="document.getElementById('pictureInput').click()">
+                            <input type="file" id="pictureInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                            <div id="imageUploadText">
+                                📷 Click to upload or drag and drop<br>
+                                <small>JPG, PNG, GIF up to 5MB</small>
+                            </div>
+                            <img id="imagePreview" class="preview-image" style="display: none;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" required>
+                        <div class="error-message" id="firstNameError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" required>
+                        <div class="error-message" id="lastNameError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" required>
+                        <div class="error-message" id="emailError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone *</label>
+                        <input type="tel" id="phone" required>
+                        <div class="error-message" id="phoneError"></div>
+                    </div>
+
+                    <div class="form-group password-group" id="passwordGroup">
+                        <label for="password">Password *</label>
+                        <input type="password" id="password" required minlength="6">
+                        <button type="button" class="password-toggle" onclick="togglePassword()">show password</button>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender *</label>
+                        <select id="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="error-message" id="genderError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth *</label>
+                        <input type="date" id="dateOfBirth" required>
+                        <div class="error-message" id="dateOfBirthError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nationality">Nationality *</label>
+                        <input type="text" id="nationality" required placeholder="e.g., Nigerian">
+                        <div class="error-message" id="nationalityError"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">Role *</label>
+                        <select id="role" required>
+                            <option value="">Select Role</option>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                        <div class="error-message" id="roleError"></div>
+                    </div>
+
+                    <div class="form-group" id="stateGroup" style="display: none;">
+                        <label for="stateOfOrigin">State of Origin</label>
+                        <input type="text" id="stateOfOrigin" placeholder="e.g., Lagos">
+                    </div>
+
+                    <div class="form-group full-width" id="addressGroup" style="display: none;">
+                        <label for="address">Address</label>
+                        <textarea id="address" rows="3" placeholder="Enter full address"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <!-- Floating Delete Button -->
+    <button class="floating-delete-btn" id="floatingDeleteBtn" onclick="deleteSelectedUsers()">
+         Delete Selected (<span id="selectedCountBtn">0</span>)
+    </button>
+
+    <script src="script.js">
+        
+      
+    </script>
+</body>
+</html>
