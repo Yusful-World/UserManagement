@@ -11,6 +11,13 @@ namespace UserManagement.Extensions
         {
             var connectionString = configuration["DefaultConnection"];
 
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                Console.WriteLine("FATAL ERROR: The 'DefaultConnection' string is null or empty.");
+                
+                return null;
+            }
+
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
             services.AddHealthChecks()
