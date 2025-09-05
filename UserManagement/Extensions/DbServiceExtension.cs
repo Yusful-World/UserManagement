@@ -9,7 +9,7 @@ namespace UserManagement.Extensions
     {
         public static IServiceCollection AddConnectionString(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration["DefaultConnection"];
+            var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
 
             if (string.IsNullOrEmpty(connectionString))
             {
